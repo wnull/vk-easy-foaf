@@ -1,5 +1,6 @@
 {
     "name": "wnull/vk-easy-foaf",
+    "description": "A fast and easy utility for parsing data from FOAF VK.",
     "license": "MIT",
     "require": {
         "php": "^8.0",
@@ -9,5 +10,13 @@
         "psr-4": {
             "VKEasyFoaf\\": "src/"
         }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "VKEasyFoafTest\\": "tests/"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "9.3.0"
     }
 }
