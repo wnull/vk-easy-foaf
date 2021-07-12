@@ -1,6 +1,6 @@
 <?php
 
-namespace VK\FOAF;
+namespace VKEasyFoaf;
 
 /**
  * Class Parser
@@ -8,20 +8,6 @@ namespace VK\FOAF;
  */
 class Parser
 {
-    /**
-     * @var string|bool $delimiter
-     */
-    protected string|bool $delimiter;
-
-    /**
-     * Parser constructor.
-     * @param array $options
-     */
-    public function __construct(array $options)
-    {
-        $this->delimiter = $options['delimiter'] ?? '_';
-    }
-
     /**
      * @param int $id
      * @return array
@@ -35,8 +21,8 @@ class Parser
         $get = file_get_contents('https://vk.com/foaf.php?id=' . $id);
 
         $mutation = preg_replace_callback_array([
-            '~jpg\K\?[^"]+~' => fn ($match) => join('|', explode('&', $match[0])),
-            '~(?:ya|foaf|img|dc|rdf)\K:~' => fn ($match) => ''
+            '~jpg\K[^"]+~' => fn ($match) => join('&amp;', explode('&', $match[0])),
+            '~(?:ya|foaf|img|dc|rdf):~' => fn () => ''
         ], $get);
 
         $xml = simplexml_load_string($mutation);
@@ -53,12 +39,9 @@ class Parser
         $result = [];
         $xmlArray = (array) $xml;
 
-        foreach ($xmlArray as $index => $node)
-        {
-            $postfix = $this->delimiter ? '$0' . $this->delimiter : '';
-            $index = preg_replace(['/^(?:foaf|ya|@)/', '/^(?:rdf|dc|img)(?!$)/'], ['', $postfix], $index);
-
-            $result[$index] = is_object($node) || is_array($node) ? $this->foafXMLtoArray($node) : str_replace('|', '&', $node) ;
+        foreach ($xmlArray as $index => $node) {
+            if (str_starts_with($index, '@')) $index = ltrim($index, '@');
+            $result[$index] = is_object($node) || is_array($node) ? $this->foafXMLtoArray($node) : $node;
         }
 
         return $result;
