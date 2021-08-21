@@ -4,7 +4,7 @@ namespace VKEasyFoaf;
 
 /**
  * Class Parser
- * @package VK\FOAF
+ * @package VKEasyFoaf
  */
 class Parser
 {
@@ -32,9 +32,9 @@ class Parser
 
     /**
      * @param \SimpleXMLElement|array $xml
-     * @return array
+     * @return \SimpleXMLElement|array
      */
-    private function foafXMLtoArray(\SimpleXMLElement|array $xml): array
+    private function foafXMLtoArray(\SimpleXMLElement|array $xml): \SimpleXMLElement|array
     {
         $result = [];
         $xmlArray = (array) $xml;
