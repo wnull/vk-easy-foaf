@@ -29,8 +29,8 @@ $group = $parse->foaf(-1); // group with id 1
 
 ## Result
 
-If the passed identifier was positive, then an array with the key `Person` will be returned, if with a negative, then `Group`.
+If the passed id was positive, then an array with the key `Person` will be returned, if with a negative, then `Group`.
 
 ## License
 
-The utility is distributed under the [MIT](https://github.com/wnull/vk-easy-foaf/blob/master/LICENSE) license.
+[MIT](LICENSE)
