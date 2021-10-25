@@ -21,7 +21,7 @@ class Parser
 		$get = file_get_contents('https://vk.com/foaf.php?id=' . $id);
 
 		$mutation = preg_replace_callback_array([
-			'~&#?(?:\d+;?)|&~' => fn ($match) => htmlspecialchars($match[0]),
+			'~&(?:#\d+;?)?~' => fn ($match) => htmlspecialchars($match[0]),
 			'~(?:ya|foaf|img|dc|rdf):~' => fn () => ''
 		], $get);
 
